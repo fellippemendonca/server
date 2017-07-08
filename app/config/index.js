@@ -1,7 +1,7 @@
 'use strict';
 
 const serverAddress = {
-  host: '192.168.1.66',
+  host: 'localhost',
   port: 3000
 }
 
