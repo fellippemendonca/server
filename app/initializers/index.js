@@ -2,9 +2,9 @@
 
 const net = require('net');
 const address = require('../config');
-const serverObject = require('./server');
-const connectionsObject = require('./connections');
-const chatsObject = require('./chats');
+const serverObject = require('../../lib/server');
+const connectionsObject = require('../objects/connections');
+const chatsObject = require('../objects/chats');
 
 // Initialize server;
 let server = new serverObject().start();
