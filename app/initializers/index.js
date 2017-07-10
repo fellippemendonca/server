@@ -7,7 +7,7 @@ const connectionsObject = require('../objects/connections');
 const chatsObject = require('../objects/chats');
 
 // Initialize server;
-let server = new serverObject().start();
+let server = new serverObject();
 
 // Initialize connections array;
 let connections = new connectionsObject();
