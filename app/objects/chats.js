@@ -10,7 +10,7 @@ function chats() {
     return this.chats;
   },
 
-  this.sendChat = (id, connection) => {
+  this.enterChat = (id, connection) => {
     let chat = this.findChat(id);
 
     if(chat) {
