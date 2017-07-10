@@ -1,8 +1,6 @@
 'use strict';
 
-let server = require('./app/initializers/').server;
-let serverEventHandler = require('./lib/serverEventHandler');
+let init = require('./app/initializers/');
 
-server.start();
-server.listenEvents();
-// serverEventHandler(server);
+init.server.start();
+init.server.listenEvents();

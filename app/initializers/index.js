@@ -1,8 +1,6 @@
 'use strict';
 
-const net = require('net');
-const address = require('../config');
-const serverObject = require('../../lib/server');
+const serverObject = require('../objects/server');
 const connectionsObject = require('../objects/connections');
 const chatsObject = require('../objects/chats');
 

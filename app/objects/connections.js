@@ -11,8 +11,7 @@ function connections() {
   },
   
   this.addConn = (conn) => {
-    let simpleConn = getConnInfo(conn);
-    return this.connections[simpleConn.id] = simpleConn;
+    return this.connections[conn.id] = conn;
   },
 
   this.bindUser = (conn, obj) => {
@@ -29,43 +28,27 @@ function connections() {
   },
   
   this.delConn = (conn) => {
-    let index = this.connections.map((element) => {
-      return element.id;
-    }).indexOf(getConnInfo(conn).id);
-    if (index > -1) {
-      return this.connections.splice(index, 1);
-    } else {
-      return this.connections;
-    }
+    return delete this.connections[conn.id];
   },
 
   this.listConn = () => {
-    return this.connections.map((element) => {
-      return { id: element.id, user: element.user };
-    })
+    let list = [];
+    for ( let element in this.connections ) {
+      list.push(this.connections[element].id);
+    }
+    return list;
   },
 
   this.findConn = (conn) => {
-    return this.connections[getConnInfo(conn).id];
+    return this.connections[conn.id];
   },
 
   this.findByUserId = (id) => {
-    let index = this.connections.map((element) => { return element.user.id }).indexOf(id);
-    if (index > -1) {
-      return this.connections[index];
-    } else {
-      return unknown;
+    for ( let element in this.connections ) {
+      if (this.connections[element].user.id === id) {
+        return this.connections[element];
+      }
     }
-  }
-}
-
-
-
-// HELPERS 
-function getConnInfo(connection) {
-  return {
-    id: connection.remoteAddress + ':' + connection.remotePort,
-    connection: connection,
-    user: { id: -1, name: 'unset'}
+    return undefined;
   }
 }
