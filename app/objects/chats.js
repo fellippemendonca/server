@@ -24,13 +24,13 @@ function chats() {
   },
 
   this.addChat = (id) => {
-    let chatId = `#ff${id}`;
+    let chatId = `#${id}`;
     this.chats[chatId] = [];
     return this.chats[chatId];
   },
 
   this.addChatMember = (id, connection) => {
-    let chatId = `#ff${id}`;
+    let chatId = `#${id}`;
     this.chats[chatId][connection.id] = connection;
     return this.chats[chatId]; 
   },
@@ -42,7 +42,7 @@ function chats() {
   },
 
   this.findChat = (id) => {
-    let chatId = `#ff${id}`;
+    let chatId = `#${id}`;
     return this.chats[chatId];
   }
 }
