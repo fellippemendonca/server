@@ -1,8 +1,6 @@
 'use strict';
 
-const serverAddress = {
-  host: 'localhost',
-  port: 3000
-}
+const serverAddress = require('./server.js');
+
 
 module.exports = serverAddress;

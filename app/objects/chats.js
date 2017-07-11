@@ -4,45 +4,42 @@ module.exports = chats;
 
 function chats() {
 
-  this.chats = [],
+  this.chats = {},
 
-  this.getChats = (conn) => {
+  this.getChats = () => {
     return this.chats;
   },
 
-  this.enterChat = (id, connection) => {
+  this.enterChat = (id, userId) => {
     let chat = this.findChat(id);
 
     if(chat) {
-      this.addChatMember(id, connection)
+      this.addChatMember(id, userId);
       return this.findChat(id);
     } else {
       this.addChat(id);
-      this.addChatMember(id, connection)
+      this.addChatMember(id, userId);
       return this.findChat(id);
     }
   },
 
   this.addChat = (id) => {
-    let chatId = `#${id}`;
-    this.chats[chatId] = [];
-    return this.chats[chatId];
+    this.chats[id] = {};
+    return this.chats[id];
   },
 
-  this.addChatMember = (id, connection) => {
-    let chatId = `#${id}`;
-    this.chats[chatId][connection.id] = connection;
-    return this.chats[chatId]; 
+  this.addChatMember = (id, userId) => {
+    this.findChat(id)[userId] = userId;
+    return this.chats[id]; 
   },
 
-  this.delChatMember = (connection) => {
+  this.delChatMember = (userId) => {
     for ( let element in this.chats ) {
-      delete this.chats[element][connection.id];
+      delete this.chats[element][userId];
     }
   },
 
   this.findChat = (id) => {
-    let chatId = `#${id}`;
-    return this.chats[chatId];
+    return this.chats[id];
   }
 }

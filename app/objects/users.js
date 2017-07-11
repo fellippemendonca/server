@@ -4,26 +4,53 @@ module.exports = users;
 
 function users() {
   
-  this.users = [],
+  this.users = {},
+  this.connections = {},
   
   this.get = () => {
-    return this.users;
+    return { users: this.users, connections: this.connections };
   },
   
-  this.add = (user) => {
-    return this.users[`#${user.id}`] = user;
+  this.addConn = (conn) => {
+    return this.connections[conn.id] = conn;
   },
 
-  this.bind = (user, conn) => {
-    this.find(user).connection = conn.id;
-  },
-  
-  this.del = (user) => {
-    return delete this.users[`#${user.id}`];
+  this.addUser = (user) => {
+    return this.users[user.id] = user;
   },
 
-  this.find = (user) => {
-    return this.users[`#${user.id}`];
+  this.bind = (conn, user) => {
+    this.addUser(user);
+    this.findConn(conn.id).userId = user.id;
+    this.findUser(user.id).connectionId = conn.id;
+    return this.findUser(user);
+  },
+
+  this.findConnByUser = (id) => {
+    let user = this.findUser(id);
+    return this.connections[user.connectionId];
+  },
+
+  this.findConn = (id) => {
+    return this.connections[id];
+  },
+
+  this.findUser = (id) => {
+    return this.users[id];
+  },
+
+  this.del = (connId) => {
+    let userId = this.findConn(connId).userId;
+    this.delUser(userId);
+    this.delConn(connId);
+  }  
+
+  this.delConn = (id) => {
+    return delete this.connections[id];
+  },
+
+  this.delUser = (id) => {
+    return delete this.users[id];
   }
 
 }
