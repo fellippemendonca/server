@@ -20,10 +20,11 @@ function users() {
   },
 
   this.bind = (conn, user) => {
+    this.addConn(conn);
     this.addUser(user);
     this.findConn(conn.id).userId = user.id;
     this.findUser(user.id).connectionId = conn.id;
-    return this.findUser(user);
+    return this.findUser(user.id);
   },
 
   this.findConnByUser = (id) => {
@@ -40,10 +41,10 @@ function users() {
   },
 
   this.del = (connId) => {
-    let userId = this.findConn(connId).userId;
-    this.delUser(userId);
+    let conn = this.findConn(connId);
+    if (conn) {this.delUser(conn.userId)};
     this.delConn(connId);
-  }  
+  }
 
   this.delConn = (id) => {
     return delete this.connections[id];

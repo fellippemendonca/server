@@ -1,20 +1,11 @@
 'use strict';
 
-const serverObject = require('../objects/server');
-const usersObject = require('../objects/users');
-const chatsObject = require('../objects/chats');
+const serverObject = require('../modules/server');
+const usersObject = require('../modules/users');
+const chatsObject = require('../modules/chats');
 
 // Initialize server;
 let server = new serverObject();
+server.start('app');
 
-// Initialize connections array;
-let users = new usersObject();
-
-// Initialize chats array;
-let chats = new chatsObject();
-
-module.exports = {
-  server,
-  users,
-  chats
-};
+module.exports = server;

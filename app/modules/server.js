@@ -2,6 +2,8 @@
 
 const net = require('net');
 const address = require('../config');
+const usersObject = require('./users');
+const chatsObject = require('./chats');
 
 module.exports = serverObject;
 
@@ -9,11 +11,15 @@ module.exports = serverObject;
 // This Object contains all basic methods of current used server lib: ('net') . 
 function serverObject() {
   let server;
+  let users;
+  let chats;
 
   // Start Server;
-  this.start = () => {
+  this.start = (app) => {
+    this.users = new usersObject();
+    this.chats = new chatsObject();
     this.server = net.createServer();
-    return this.server;
+    this.listenEvents();
   },
 
   // Listen Events
@@ -31,13 +37,16 @@ function serverObject() {
     this.server.on('listening', (obj) => {
       serverEvents.onListening(obj);
     });
+
     this.server.on('connection', (connection) => {
       let connObj = buildConnObj(connection);
       serverEvents.onConnetion(connObj, this.connectionEvents);
     });
+    
     this.server.on('close', (obj) => {
       serverEvents.onClose(obj);
     });
+    
     this.server.on('error', (obj) => {
       serverEvents.onError(obj);
     });
@@ -46,7 +55,7 @@ function serverObject() {
   // Connection Events;
   this.connectionEvents = (connObj) => {
     let clientEventsObj = require('../../lib/handlers/clientEvents');
-    let clientEvents = new clientEventsObj(connObj); 
+    let clientEvents = new clientEventsObj( connObj, this.users, this.chats ); 
 
     connObj.connection.on('connect', (obj) => {
       clientEvents.onConnect(obj);
@@ -77,8 +86,7 @@ function serverObject() {
 function buildConnObj(connection) {
   return {
     id: connection.remoteAddress + ':' + connection.remotePort,
-    connection: connection,
-    user: { id: -1, name: 'unset'}
+    connection: connection
   }
 }
 
