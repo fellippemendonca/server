@@ -2,7 +2,7 @@
 
 const serverAddress = {
   host: 'localhost',
-  port: 7777
+  port: 3000
 }
 
 module.exports = serverAddress;
