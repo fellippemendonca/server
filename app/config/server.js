@@ -1,8 +1,8 @@
 'use strict';
 
 const serverAddress = {
-  host: '192.168.1.66',//'localhost',
-  port: 3000
+  host: 'localhost',
+  port: 7777
 }
 
 module.exports = serverAddress;
